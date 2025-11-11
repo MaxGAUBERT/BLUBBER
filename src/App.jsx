@@ -51,18 +51,19 @@ export default function App() {
         </p>
 
         <div className="absolute flex flex-col p-2 bg-gray-700 overflow-auto w-[1000px] h-[700px] max-h-[800px] top-0 right-0 border-4 border-gray-500 border-double rounded">
-          <div className="relative mt-2 ml-3">
+          <div className="mt-2 ml-3">
             <SearchBar onSearch={handleSearch} tasks={tasks} />
           </div>
           
-          <TaskList
+          <div className="relative ml-5">
+            <TaskList
               tasks={filteredTasks}
               setTasks={setTasks}
               showEditWindow={showEditWindow}
               setShowEditWindow={setShowEditWindow}
               setSelectedTask={setSelectedTask}
           />
-         
+          </div>         
         </div>
 
         {showEditWindow && (
@@ -77,7 +78,7 @@ export default function App() {
 
         {hasReminder && <ReminderPanel selectedTask={selectedTask}/>}
 
-        <div className="fixed bottom-0 left-0">
+        <div className="fixed bottom-0">
           <TaskManager
             addTask={AddTask}
             UpdateTask={UpdateTask}
