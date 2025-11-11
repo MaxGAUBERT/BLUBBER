@@ -6,7 +6,7 @@ export default function TaskList({tasks, setTasks, showEditWindow, setShowEditWi
 
     const {colorsComponent} = useGlobalColorContext()
     return (
-        <div style={{backgroundColor: colorsComponent.Background, justifyContent: "flex-start"}}>
+        <div className="space-y-4" style={{backgroundColor: colorsComponent.Background, justifyContent: "flex-start"}}>
             {tasks.map((task) => {
                 return <div key={task.id}>
                     <label>
