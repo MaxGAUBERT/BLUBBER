@@ -41,9 +41,5 @@ export default function TaskList({tasks, setTasks, showEditWindow, setShowEditWi
             })}
 
         </div>
-
-
-
-
     )
 }
