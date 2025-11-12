@@ -8,12 +8,11 @@ import { HiOutlineBellAlert } from "react-icons/hi2";
 
 export default function App() {
   const {
-  tasks,
+  displayedTasks,
   filteredTasks,
   setTasks,
   selectedTask,
   setSelectedTask,
-  sortedTasks,
   showEditWindow,
   setShowEditWindow,
   AddTask,
@@ -38,17 +37,18 @@ export default function App() {
 
         <div className="absolute flex flex-col p-2 bg-gray-700 overflow-auto w-[1000px] h-[700px] max-h-[800px] top-0 right-0 border-4 border-gray-500 border-double rounded">
           <div className="mt-2 ml-3">
-            <SearchBar onSearch={handleSearch} onSort={handleSort} tasks={filteredTasks} />
+            <SearchBar onSearch={handleSearch} onSort={handleSort} tasks={displayedTasks} />
           </div>
           
           <div className="relative ml-5">
-            <TaskList
-              tasks={sortedTasks}
-              setTasks={setTasks}
-              showEditWindow={showEditWindow}
-              setShowEditWindow={setShowEditWindow}
-              setSelectedTask={setSelectedTask}
-          />
+              <TaskList
+                tasks={displayedTasks}
+                setTasks={setTasks}
+                showEditWindow={showEditWindow}
+                setShowEditWindow={setShowEditWindow}
+                setSelectedTask={setSelectedTask}
+              />
+
           </div>         
         </div>
 
