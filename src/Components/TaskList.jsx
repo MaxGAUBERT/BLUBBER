@@ -20,7 +20,7 @@ export default function TaskList({tasks, setTasks, showEditWindow, setShowEditWi
                     }/>
 
                     <p>
-                        {task.callTime || "No call defined !"}
+                        {task.callTime || "No remind defined !"}
                     </p>
 
                     <button style={{marginTop: "5px", marginLeft: 5}} onClick={() => {setShowEditWindow(!showEditWindow); setSelectedTask(task)}}>
