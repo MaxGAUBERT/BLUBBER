@@ -1,4 +1,4 @@
-import GlobalColorContextProvider, { useGlobalColorContext } from "../Contexts/GlobalColorContext";
+import  { useGlobalColorContext } from "../Contexts/GlobalColorContext";
 
 
 
@@ -18,6 +18,10 @@ export default function TaskList({tasks, setTasks, showEditWindow, setShowEditWi
                         setTasks(tasks.map((t) => t.id === task.id ? {...t, done: !t.done} : t))
                     }
                     }/>
+
+                    <p>
+                        {task.callTime || "No call defined !"}
+                    </p>
 
                     <button style={{marginTop: "5px", marginLeft: 5}} onClick={() => {setShowEditWindow(!showEditWindow); setSelectedTask(task)}}>
                         Edit
