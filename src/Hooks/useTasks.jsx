@@ -2,21 +2,15 @@ import { useState, useEffect } from "react"
 
 export default function useTasks() {
   const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "Task 1",
-      describe: "Description 1",
-      done: false,
-      callTime: null,
-    },
+    { id: 1, text: "Task 1", describe: "Description 1", done: false, callTime: null },
   ])
 
   const [selectedTask, setSelectedTask] = useState(tasks[0])
-  const [filteredTasks, setFilteredTasks] = useState(tasks)
-  const [sortedTasks, setSortedTasks] = useState(tasks)
   const [showEditWindow, setShowEditWindow] = useState(false)
+  const [displayedTasks, setDisplayedTasks] = useState(tasks)
+  const [sortOrder, setSortOrder] = useState(null)
 
-  // --- Gestion des tâches ---
+    // --- Gestion des tâches ---
   const AddTask = () => {
     const nextId = tasks.length > 0 ? Math.max(...tasks.map((t) => t.id)) + 1 : 1
     const newTask = {
@@ -35,13 +29,7 @@ export default function useTasks() {
     setSelectedTask(null)
   }
 
-  const UpdateTask = (id) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t))
-    )
-  }
-
-  const SaveTaskEdit = () => {
+    const SaveTaskEdit = () => {
     setTasks((prev) =>
       prev.map((t) =>
         t.id === selectedTask.id
@@ -56,55 +44,54 @@ export default function useTasks() {
     )
   }
 
-  // --- Filtrage ---
+
+  // --- Recherche ---
   const handleSearch = (query) => {
-    if (!query) {
-      setFilteredTasks(tasks)
-      return
-    }
-    const q = query.toLowerCase()
+    const q = query?.toLowerCase() || ""
     const filtered = tasks.filter(
       (t) =>
         t.text.toLowerCase().includes(q) ||
         (t.describe && t.describe.toLowerCase().includes(q))
     )
-    setFilteredTasks(filtered)
+    applySort(filtered, sortOrder)
   }
 
   // --- Tri ---
-  const handleSort = (order) => {
-    const base = [...filteredTasks]
-    const sorted = base.sort((a, b) => {
+  const applySort = (list, order) => {
+    if (!order) {
+      setDisplayedTasks(list)
+      return
+    }
+    const sorted = [...list].sort((a, b) => {
       const dateA = a.callTime ? new Date(a.callTime).getTime() : 0
       const dateB = b.callTime ? new Date(b.callTime).getTime() : 0
       return order === "asc" ? dateA - dateB : dateB - dateA
     })
-    setSortedTasks(sorted)
+    setDisplayedTasks(sorted)
   }
 
-  // --- Synchronisation automatique ---
+  const handleSort = (order) => {
+    setSortOrder(order)
+    applySort(displayedTasks, order)
+  }
+
+  // --- Sync global ---
   useEffect(() => {
-    setFilteredTasks(tasks)
-    setSortedTasks(tasks)
+    applySort(tasks, sortOrder)
   }, [tasks])
 
   return {
-    // états principaux
     tasks,
     setTasks,
+    displayedTasks,
     selectedTask,
     setSelectedTask,
-    filteredTasks,
-    sortedTasks,
-    showEditWindow,
-    setShowEditWindow,
-
-    // actions
-    AddTask,
-    DeleteAllTask,
-    UpdateTask,
-    SaveTaskEdit,
     handleSearch,
     handleSort,
+    DeleteAllTask, 
+    AddTask, 
+    showEditWindow, 
+    setShowEditWindow,
+    SaveTaskEdit
   }
 }
