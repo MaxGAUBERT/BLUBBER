@@ -30,7 +30,7 @@ export default function App() {
     <GlobalColorContextProvider>
       <div className="relative font-['Roboto_Mono'] italic w-[100vw] h-[100vh] overflow-hidden bg-gray-800 text-white">
         <h1 className="absolute text-[30px] flex flex-row top-0 left-4 font-bold">
-          BLUBBER <HiOutlineBellAlert className="ml-3 bg-green-400" color="red" size={30}/>
+          QUICK TASK <HiOutlineBellAlert className="ml-3 bg-green-400" color="red" size={30}/>
         </h1>
         <p className="absolute top-8">
             Advanced task manager
