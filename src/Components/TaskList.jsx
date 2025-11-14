@@ -13,7 +13,7 @@ export default function TaskList({
 
   return (
     <div
-      className="flex flex-col gap-3 p-3 rounded-md overflow-y-auto max-h-[550px]"
+      className="flex flex-col gap-3 p-3 rounded-md overflow-y-auto"
       style={{ backgroundColor: colorsComponent.Background }}
     >
       {tasks.length === 0 ? (
