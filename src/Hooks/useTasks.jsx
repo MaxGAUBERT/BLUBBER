@@ -5,6 +5,8 @@ export default function useTasks() {
     { id: 1, text: "Task 1", describe: "Description 1", done: false, callTime: null },
   ])
 
+  const [savedTasks, setSavedTasks] = useState("")
+
   const [selectedTask, setSelectedTask] = useState(tasks[0])
   const [showEditWindow, setShowEditWindow] = useState(false)
   const [displayedTasks, setDisplayedTasks] = useState(tasks)
@@ -80,6 +82,46 @@ export default function useTasks() {
     applySort(tasks, sortOrder)
   }, [tasks])
 
+  const SaveTasksToFile = () => {
+    if (!tasks) return
+    const blob = new Blob([JSON.stringify(tasks, null, 2)], {type: "application/json"})
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement("a")
+    a.href = url
+    a.download = savedTasks
+    a.click()
+
+    URL.revokeObjectURL(url)
+  }
+
+  const UploadTasks = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  const reader = new FileReader()
+
+  reader.onload = (e) => {
+    try {
+      const json = JSON.parse(e.target.result)
+
+      if (!Array.isArray(json)) {
+        console.error("Invalid JSON: expected an array of tasks.")
+        return
+      }
+
+      setTasks(json)
+      console.log("Tasks uploaded:", json)
+
+    } catch (err) {
+      console.error("Invalid JSON file format.", err)
+    }
+  }
+
+  reader.readAsText(file)
+}
+
+
   return {
     tasks,
     setTasks,
@@ -92,6 +134,8 @@ export default function useTasks() {
     AddTask, 
     showEditWindow, 
     setShowEditWindow,
-    SaveTaskEdit
+    SaveTaskEdit, 
+    SaveTasksToFile,
+    UploadTasks
   }
 }
