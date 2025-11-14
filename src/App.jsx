@@ -24,52 +24,73 @@ export default function App() {
 } = useTasks()
 
 
+return (
+  <GlobalColorContextProvider>
+    <div className="relative font-['Roboto_Mono'] italic h-screen w-screen bg-gray-800 text-white overflow-hidden">
 
-  return (
-    <GlobalColorContextProvider>
-      <div className="relative font-['Roboto_Mono'] italic w-[100vw] h-[100vh] overflow-hidden bg-gray-800 text-white">
-        <h1 className="absolute text-[30px] flex flex-row top-0 left-4 font-bold">
-          QUICK TASK <HiOutlineBellAlert className="ml-3 bg-green-400" color="red" size={30}/>
+      {/* HEADER */}
+      <header className="absolute top-0 left-0 p-4">
+        <h1 className="text-[30px] flex flex-row font-bold">
+          QUICK TASK
+          <HiOutlineBellAlert className="ml-3 bg-green-400" color="red" size={30}/>
         </h1>
-        <p className="absolute top-8">
-            Advanced task manager
-        </p>
+        <p className="ml-1">Advanced task manager</p>
+      </header>
 
-        <div className="absolute flex flex-col p-2 bg-gray-700 overflow-auto w-[1000px] h-[700px] max-h-[800px] top-0 right-0 border-4 border-gray-500 border-double rounded">
-          <div className="mt-2 ml-3">
-            <SearchBar onSearch={handleSearch} onSort={handleSort} tasks={displayedTasks} />
-          </div>
-          
-          <div className="relative ml-5">
-              <TaskList
-                tasks={displayedTasks}
-                setTasks={setTasks}
-                showEditWindow={showEditWindow}
-                setShowEditWindow={setShowEditWindow}
-                setSelectedTask={setSelectedTask}
-              />
-
-          </div>         
+      {/* MAIN ZONE (full responsive container) */}
+      <main className="
+        absolute right-0 top-0 
+        flex flex-col 
+        bg-gray-700
+        border-4 border-gray-500 border-double
+        rounded
+        p-4
+        h-full
+        w-full
+        max-w-[1100px]
+        overflow-y-auto
+      ">
+        <div className="mt-12"> 
+          <SearchBar
+            onSearch={handleSearch}
+            onSort={handleSort}
+            tasks={displayedTasks}
+          />
         </div>
 
-        {showEditWindow && (
-          <EditModal
+        <div className="flex-1 mt-4 overflow-y-auto">
+          <TaskList
+            tasks={displayedTasks}
+            setTasks={setTasks}
             showEditWindow={showEditWindow}
             setShowEditWindow={setShowEditWindow}
-            selectedTask={selectedTask}
             setSelectedTask={setSelectedTask}
-            SaveTaskEdit={SaveTaskEdit}
-          />
-        )}
-
-        <div className="fixed bottom-0">
-          <TaskManager
-            addTask={AddTask}
-            UpdateTask={UpdateTask}
-            DeleteAllTask={DeleteAllTask}
           />
         </div>
+      </main>
+
+      {/* EDIT MODAL */}
+      {showEditWindow && (
+        <EditModal
+          showEditWindow={showEditWindow}
+          setShowEditWindow={setShowEditWindow}
+          selectedTask={selectedTask}
+          setSelectedTask={setSelectedTask}
+          SaveTaskEdit={SaveTaskEdit}
+        />
+      )}
+
+      {/* BOTTOM BUTTONS */}
+      <div className="fixed bottom-0 left-0 p-2">
+        <TaskManager
+          addTask={AddTask}
+          UpdateTask={UpdateTask}
+          DeleteAllTask={DeleteAllTask}
+        />
       </div>
-    </GlobalColorContextProvider>
-  )
+
+    </div>
+  </GlobalColorContextProvider>
+);
+
 }
