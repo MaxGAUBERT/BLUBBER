@@ -5,6 +5,8 @@ import SearchBar from "./Components/SearchBar"
 import GlobalColorContextProvider from "./Contexts/GlobalColorContext"
 import EditModal from "./Components/EditModal"
 import { HiOutlineBellAlert } from "react-icons/hi2";
+import SaveSystem from "./Components/SaveSystem"
+import useData from "./Hooks/useData"
 
 export default function App() {
   const {
@@ -16,12 +18,12 @@ export default function App() {
   setShowEditWindow,
   AddTask,
   DeleteAllTask,
-  SaveTasksToFile,
-  UploadTasks,
   SaveTaskEdit,
   handleSearch,
   handleSort,
 } = useTasks()
+
+const {showSaveModal, setShowSaveModal, UploadTasks} = useData(displayedTasks)
 
 
 return (
@@ -84,10 +86,16 @@ return (
       <div className="fixed bottom-0 left-0 p-2">
         <TaskManager
           addTask={AddTask}
-          SaveTasks={SaveTasksToFile}
+          SaveTasks={() => setShowSaveModal(!showSaveModal)}
           DeleteAllTask={DeleteAllTask}
           UploadTasks={UploadTasks}
         />
+      </div>
+
+      <div>
+        {showSaveModal && (
+          <SaveSystem showSaveModal={showSaveModal} setShowSaveModal={setShowSaveModal}/>
+        )}
       </div>
     </div>
   </GlobalColorContextProvider>
