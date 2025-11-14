@@ -16,6 +16,7 @@ const GlobalColorContextProvider = ({ children }) => {
         "BackgroundList": "blue.200",
         "BackgroundIO": "gray.500",
         "Border": "gray.700",
+        "BorderModals": "black"
     });
 
     return (
