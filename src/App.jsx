@@ -9,7 +9,6 @@ import { HiOutlineBellAlert } from "react-icons/hi2";
 export default function App() {
   const {
   displayedTasks,
-  filteredTasks,
   setTasks,
   selectedTask,
   setSelectedTask,
@@ -17,7 +16,8 @@ export default function App() {
   setShowEditWindow,
   AddTask,
   DeleteAllTask,
-  UpdateTask,
+  SaveTasksToFile,
+  UploadTasks,
   SaveTaskEdit,
   handleSearch,
   handleSort,
@@ -50,7 +50,7 @@ return (
         max-w-[1100px]
         overflow-y-auto
       ">
-        <div className="mt-12"> 
+        <div className="mt-2"> 
           <SearchBar
             onSearch={handleSearch}
             onSort={handleSort}
@@ -84,11 +84,11 @@ return (
       <div className="fixed bottom-0 left-0 p-2">
         <TaskManager
           addTask={AddTask}
-          UpdateTask={UpdateTask}
+          SaveTasks={SaveTasksToFile}
           DeleteAllTask={DeleteAllTask}
+          UploadTasks={UploadTasks}
         />
       </div>
-
     </div>
   </GlobalColorContextProvider>
 );
