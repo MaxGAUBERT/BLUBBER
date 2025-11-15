@@ -8,13 +8,13 @@ export default function useData(tasks){
     const [savedTasks, setSavedTasks] = useState("")
     const [showSaveModal, setShowSaveModal] = useState(false)
 
-    const SaveTasksToFile = () => {
+    const SaveTasksToFile = (savedTasks) => {
         const blob = new Blob([JSON.stringify(tasks, null, 2)], { type: "application/json" })
         const url = URL.createObjectURL(blob)
 
         const a = document.createElement("a")
         a.href = url
-        a.download = "tasks.json"
+        a.download = savedTasks
         a.click()
 
         URL.revokeObjectURL(url)
