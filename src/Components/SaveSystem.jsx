@@ -4,33 +4,49 @@ import useData from "../Hooks/useData"
 
 
 
+export default function SaveSystem({ showSaveModal, setShowSaveModal }) {
+  const { savedTasks, setSavedTasks, SaveTasksToFile } = useData()
 
+  return (
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[2000] p-4">
 
+      <div className="bg-white text-black w-full max-w-md rounded-xl shadow-2xl border-4 border-black border-double p-6 flex flex-col gap-5 animate-scaleIn">
 
-export default function SaveSystem({showSaveModal, setShowSaveModal}){
-    const {savedTasks, setSavedTasks } = useData()
-    const {colorsComponent} = useGlobalColorContext()
+        {/* Title */}
+        <h2 className="text-center text-xl font-semibold tracking-wide">
+          Save tasks
+        </h2>
 
-
-    return (
-        <div className="fixed inset-0 flex items-center justify-center z-[1200] overflow-auto">
-            <div style={{backgroundColor: colorsComponent.Background, color: colorsComponent.Text, borderColor: colorsComponent.BorderModals}} className="p-5 border-4 rounded-lg w-[300px] h-[300px] shadow-lg border-double flex flex-col">
-                <label className="block text-center">
-                    Save tasks
-                </label>
-
-                <div className="mt-5">
-                    <input type="text" placeholder="File name: " onChange={(e) => setSavedTasks(e.target.value)} value={savedTasks}></input>
-
-                    <button onClick={() => setShowSaveModal(!showSaveModal)}>
-                        Cancel
-                    </button>
-                </div>
-
-
-            
-
-            </div>
+        {/* Input */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium">File name</label>
+          <input
+            type="text"
+            placeholder="e.g. myTasks"
+            value={savedTasks}
+            onChange={(e) => setSavedTasks(e.target.value)}
+            className="w-full px-3 py-2 rounded-md border border-gray-400 focus:border-black focus:ring-2 focus:ring-black/30 outline-none"
+          />
         </div>
-)
+
+        {/* Buttons */}
+        <div className="flex justify-end gap-3 pt-2">
+          <button
+            onClick={() => setShowSaveModal(!showSaveModal)}
+            className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition"
+          >
+            Cancel
+          </button>
+
+          <button
+            className="px-5 py-2 bg-black text-white rounded-md font-medium hover:bg-gray-900 transition"
+            onClick={() => SaveTasksToFile(savedTasks)}
+          >
+            Save
+          </button>
+        </div>
+
+      </div>
+    </div>
+  )
 }
